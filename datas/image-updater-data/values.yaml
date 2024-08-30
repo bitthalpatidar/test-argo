@@ -5,7 +5,7 @@ image:
   tag: 1.2.1 # initial tag in your deployment
   pullPolicy: IfNotPresent
 
-# images:
-#   - name: bitthalpatidar/my-repo
-#     newName: bitthalpatidar/my-repo
-#     newTag: "1.2.4"  # desired tag for updating
+images:
+  - name: bitthalpatidar/my-repo
+    newName: bitthalpatidar/my-repo
+    newTag: "1.2.4"  # desired tag for updating
