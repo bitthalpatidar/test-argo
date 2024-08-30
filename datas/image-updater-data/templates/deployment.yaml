@@ -16,5 +16,4 @@ spec:
         - name: nginx
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           command: ["/bin/sh", "-c", "while true; do echo mypod is running; sleep 5; done"]
-      imagePullSecrets:
-      - name: dockerhub-secret
+
