@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: bitthalpatidar/my-repo
-  tag: 1.2.1 # initial tag in your deployment
+  tag: 1.2.3 # initial tag in your deployment
   pullPolicy: IfNotPresent
 
 images:
