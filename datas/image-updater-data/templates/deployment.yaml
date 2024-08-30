@@ -12,6 +12,8 @@ spec:
       labels:
         app: my-app
     spec:
+      imagePullSecrets:
+      - name: dockerhub-secret
       containers:
         - name: nginx
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
