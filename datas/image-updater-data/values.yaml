@@ -8,4 +8,4 @@ image:
 images:
   - name: bitthalpatidar/my-repo
     newName: bitthalpatidar/my-repo
-    newTag: "1.2.2"  # desired tag for updating
+    newTag: "1.2.4"  # desired tag for updating
