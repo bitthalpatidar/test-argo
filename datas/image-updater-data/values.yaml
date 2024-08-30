@@ -2,10 +2,10 @@ replicaCount: 1
 
 image:
   repository: bitthalpatidar/my-repo
-  tag: 1.2.3 # initial tag in your deployment
+  tag: 1.2.2 # initial tag in your deployment
   pullPolicy: IfNotPresent
 
 images:
   - name: bitthalpatidar/my-repo
     newName: bitthalpatidar/my-repo
-    newTag: "1.2.4"  # desired tag for updating
+    newTag: "1.2.3"  # desired tag for updating
