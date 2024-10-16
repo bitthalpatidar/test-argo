@@ -1,14 +1,19 @@
-# job-sleep.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: sleep-job
+  annotations:
+    #argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-options: Validate=false
+    argocd.argoproj.io/sync-options: Force=true,Replace=true
+  name: run-tests
 spec:
   template:
     spec:
       containers:
-      - name: sleep-container
-        image: busybox
-        command: ["sleep", "600"] # Sleep for 5 minutes (300 seconds)
+      - name: run-tests
+        image: curlimages/curl:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - echo i have been run; echo when did i run; sleep 60; exit 1
       restartPolicy: Never
-  backoffLimit: 4
+  backoffLimit: 0
