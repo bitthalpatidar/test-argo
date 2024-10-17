@@ -1,0 +1,50 @@
+# this appset install argocd on created vcluster 
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argocd-cluster-appset
+  namespace: argocd
+spec:
+  generators:
+    - clusters:
+       selector:
+          matchLabels:
+            vcluster: "true"
+  template:
+    metadata:
+      name: '{{name}}-argocd'
+    spec:
+      project: default
+      source:
+          repoURL: https://argoproj.github.io/argo-helm
+          targetRevision: 6.7.11
+          chart: argo-cd
+          helm:
+            values: |
+              configs:
+                cm:
+                  accounts.admin: apiKey, login
+                params:
+                  server.insecure: true
+              server:
+                ingress:
+                  enabled: true
+                  annotations:
+                    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+                    #nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+                    cert-manager.io/cluster-issuer: letsencrypt-isdargo08-argocd
+                    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+                  ingressClassName: "nginx"
+                  hostname: '{{name}}-ingress.argocd.opsmx.net'
+                  path: /
+                  pathType: Prefix
+                  tls: true
+      destination:
+        server: '{{server}}'
+        namespace: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
