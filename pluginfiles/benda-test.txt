@@ -1,1 +1,2 @@
 kaya=benda
+kay=bend
