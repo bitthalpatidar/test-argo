@@ -1,0 +1,35 @@
+# add cluster in argoccd this application
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd17-vcluster
+  namespace: argocd
+  labels:
+    vcluster: "true"
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      parameters:
+      - name: username
+        value: argocd17-vcluster
+      - name: hostname
+        value: argocd.opsmx.net
+      - name: clusterissuer 
+        value: letsencrypt-isdargo08-argocd
+    path: vcluster-argocd-chart
+    repoURL: https://github.com/TejaswiniOpsmx/vcluster-helm
+    targetRevision: HEAD
+  syncPolicy:
+    automated: {}
+
+
+#k get deploy -n ingress-nginx
+# --enable-ssl-passthrough in deployment of ingress-controller
+#get cluster config file
+#k -n argocd16-vcluster get secret argocd16-vcluster-kubeconfig  -o jsonpath='{.data.config}' |base64 -d > argocd16-vcluster.kubeconfig
+#label to secret then argocd appset will work
+#kubectl label secret cluster-argocd1-vcluster.argocd.opsmx.net-1234567890 -n argocd vcluster=true
