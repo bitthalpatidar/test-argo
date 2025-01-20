@@ -1,0 +1,23 @@
+replicaCount: 2
+
+image:
+  repository: nginx
+  tag: "1.21.6"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+configMap:
+  appConfig:
+    appKey: "my-app-key"
+    appValue: "my-app-value"
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
