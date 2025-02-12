@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-global-sync-timeout-local
+  name: global-sync-timeout-1
   namespace: argocd
 spec:
   destination:
