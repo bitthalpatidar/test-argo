@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/bitthalpatidar/test-argo.git  # Replace with your repo URL
     targetRevision: main
-    path: source-data/global-sync  # Replace with the correct path containing the ConfigMap YAML
+    path: global-sync  # Replace with the correct path containing the ConfigMap YAML
   syncPolicy:
   #   syncTimeout: 5 # seconds, default: unlimited
   #   onSyncTimeout: "fail" # or "retry" (?), or "waitForUpdate" (?)
