@@ -1,13 +1,9 @@
 apiVersion: v1
 data:
   foo: bar
-  goo: car
-  test: trial
   benda: beera
 kind: ConfigMap
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-options: Prune=confirm, Delete=confirm
   name: somecm1
 ---
 apiVersion: v1
@@ -16,16 +12,15 @@ metadata:
   name: my-secret1
 type: Opaque
 data:
-  username: +++++++dXNlcm5hbWU=  # Base64 encoded value of "username"
+  username: +++++++dXNlcm5hbWU==  # Base64 encoded value of "username"
   password: cGFzc3dvcmQ=  # Base64 encoded value of "password"
-  
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: sync-wait-job1
-  # annotations:
-  #   argocd.argoproj.io/hook: PreSync
+  annotations:
+    argocd.argoproj.io/hook: PreSync
 spec:
   template:
     spec:
