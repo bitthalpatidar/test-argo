@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: docker-visualizer
+  labels:
+    app: docker-visualizer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-visualizer
+  template:
+    metadata:
+      labels:
+        app: docker-visualizer
+    spec:
+      containers:
+        - name: docker-visualizer
+          image: dockersamples/visualizer:latest  # Docker Visualizer image
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DOCKER_HOST
+              value: "tcp://localhost:2375"  # Ensure Docker Visualizer can connect to Docker daemon
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: docker-visualizer
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: docker-visualizer
+  type: LoadBalancer  # To expose the service externally
