@@ -33,4 +33,4 @@ spec:
       targetPort: 8080
   selector:
     app: docker-visualizer
-  type: LoadBalancer  # To expose the service externally
+  type: NodePort  # To expose the service externally
