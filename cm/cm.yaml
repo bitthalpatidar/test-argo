@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Configmap
+metadata:
+  name: my-cm
+data:
+  one: one
+  two: two
