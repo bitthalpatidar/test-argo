@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: my-con
-          image: vandanapatidar/test-repo:001
+          image: docker.io/vandanapatidar/test-repo:001
           ports:
            - containerPort: 80
       imagePullSecrets:
