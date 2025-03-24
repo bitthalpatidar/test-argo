@@ -16,6 +16,13 @@ jobs:
           echo "Running on a self-hosted runner"
           uname -a
           whoami
+          
+      - name: Show changes in the latest commit
+        run: |
+          echo "Recent changes in the repository:"
+          git diff --name-only HEAD^ HEAD  # file name have made changes
+          git fetch origin main --depth=2  # Fetch the latest two commits for comparison
+          git diff HEAD^ HEAD  # Show the changes between the latest commit and the previous commit
 
       - name: Run a sample script
         run: |
