@@ -27,3 +27,6 @@ jobs:
         run: |
           echo "Hello from Custom Runner!"
           ls -l
+      - name: Clone Private Repository
+        run: |
+          git clone https://$MY_GIT_TOKEN@github.com/bitthalpatidar/my-new-repo.git
