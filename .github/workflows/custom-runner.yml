@@ -1,0 +1,23 @@
+name: Custom Runner CI
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: self-hosted  # This will run on your custom runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Fetches your code
+
+      - name: Display system information
+        run: |
+          echo "Running on a self-hosted runner"
+          uname -a
+          whoami
+
+      - name: Run a sample script
+        run: |
+          echo "Hello from Custom Runner!"
+          ls -l
