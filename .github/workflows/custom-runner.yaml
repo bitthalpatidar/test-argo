@@ -8,8 +8,8 @@ jobs:
   build:
     runs-on: self-hosted  # This will run on your custom runner
     steps:
-      # - name: Checkout repository
-      #   uses: actions/checkout@v4  # Fetches your code
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Fetches your code
 
       - name: Display system information
         run: |
