@@ -32,8 +32,6 @@ jobs:
         run: |
           pwd 
           echo "Cloning using $GITHUB_USERNAME"
-          GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}  # Set your GitHub username in secrets
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
           git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/bitthalpatidar/my-new-repo.git
           ls -ltra my-new-repo
     
