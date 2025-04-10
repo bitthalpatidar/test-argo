@@ -38,7 +38,8 @@ jobs:
           ls -ltra my-new-repo
           if [ -d "/runner/_work/test-argo/test-argo" ]; then
             echo "Repository cloned successfully!"
-            ls -l /runner/_work/test-argo/test-argo
+            ls -l /runner/_work/
+            echo "renner directory"
           else
             echo "Failed to clone the repository."
           fi
