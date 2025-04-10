@@ -33,11 +33,13 @@ jobs:
           pwd 
           echo "Cloning using $GITHUB_USERNAME"
           git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/bitthalpatidar/my-new-repo.git
+          ls -ltra my-new-repo
     
           # rm -rf my-new-repo
           
           # git clone https://$MY_GIT_TOKEN@github.com/bitthalpatidar/my-new-repo.git
-
-
           # ls -ltra my-new-repo
+
+
+          
 
