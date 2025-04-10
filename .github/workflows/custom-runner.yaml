@@ -31,6 +31,8 @@ jobs:
       - name: Clone Private Repository
         run: |
           pwd 
+          uname -a
+          whoami
           echo "Cloning using $GITHUB_USERNAME"
           git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/bitthalpatidar/my-new-repo.git
           ls -ltra my-new-repo
