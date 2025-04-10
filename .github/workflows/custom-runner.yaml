@@ -43,6 +43,8 @@ jobs:
           else
             echo "Failed to clone the repository."
           fi
+          pwd
+          ls -la ..
     
           # rm -rf my-new-repo
           
