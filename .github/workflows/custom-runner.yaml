@@ -45,6 +45,12 @@ jobs:
           fi
           pwd
           ls -la ..
+          
+      - name: Upload applist artifact for  diff
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-diff
+          path: /runner/_work/test-argo/test-argo/*.yaml
     
           # rm -rf my-new-repo
           
