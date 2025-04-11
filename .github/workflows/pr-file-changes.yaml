@@ -3,6 +3,8 @@ name: Get Changed Files in PR
 on:
   pull_request:
     types: [opened, synchronize]
+    branches:
+      - main
 
 jobs:
   get-changed-files:
