@@ -1,55 +1,55 @@
-# name: Custom Runner CI
+name: Custom Runner CI
 
-# on:
-#   push:
-#     branches:
-#       - main
-# jobs:
-#   build:
-#     runs-on: self-hosted  # This will run on your custom runner
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v4  # Fetches your code
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: self-hosted  # This will run on your custom runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4  # Fetches your code
 
-#       - name: Display system information
-#         run: |
-#           echo "Running on a self-hosted runner"
-#           uname -a
-#           whoami
+      - name: Display system information
+        run: |
+          echo "Running on a self-hosted runner"
+          uname -a
+          whoami
           
-#       - name: Show changes in the latest commit
-#         run: |
-#           echo "Recent changes in the repository:"
-#           git fetch origin main --depth=2  # Fetch the latest two commits for comparison
-#           git diff HEAD^ HEAD  # Show the changes between the latest commit and the previous commit
-#           git diff --name-only HEAD^ HEAD  # file name have made changes
-#       - name: Run a sample script
-#         run: |
-#           echo "Hello from Custom Runner!"
-#           pwd
-#           ls -l
-#       - name: Clone Private Repository
-#         run: |
-#           pwd 
-#           uname -a
-#           whoami
-#           echo "Cloning using $GITHUB_USERNAME"
-#           git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/bitthalpatidar/my-new-repo.git
-#           ls -ltra my-new-repo
-#           if [ -d "/runner/_work/test-argo/test-argo" ]; then
-#             echo "Repository cloned successfully!"
-#             ls -l /runner/_work/
-#             echo "renner directory"
-#           else
-#             echo "Failed to clone the repository."
-#           fi
-#           pwd
-#           ls -la ..
+      - name: Show changes in the latest commit
+        run: |
+          echo "Recent changes in the repository:"
+          git fetch origin main --depth=2  # Fetch the latest two commits for comparison
+          git diff HEAD^ HEAD  # Show the changes between the latest commit and the previous commit
+          git diff --name-only HEAD^ HEAD  # file name have made changes
+      - name: Run a sample script
+        run: |
+          echo "Hello from Custom Runner!"
+          pwd
+          ls -l
+      - name: Clone Private Repository
+        run: |
+          pwd 
+          uname -a
+          whoami
+          echo "Cloning using $GITHUB_USERNAME"
+          git clone https://$GITHUB_USERNAME:$GITHUB_TOKEN@github.com/bitthalpatidar/my-new-repo.git
+          ls -ltra my-new-repo
+          if [ -d "/runner/_work/test-argo/test-argo" ]; then
+            echo "Repository cloned successfully!"
+            ls -l /runner/_work/
+            echo "renner directory"
+          else
+            echo "Failed to clone the repository."
+          fi
+          pwd
+          ls -la ..
     
-#           # rm -rf my-new-repo
+          # rm -rf my-new-repo
           
-#           # git clone https://$MY_GIT_TOKEN@github.com/bitthalpatidar/my-new-repo.git
-#           # ls -ltra my-new-repo
+          # git clone https://$MY_GIT_TOKEN@github.com/bitthalpatidar/my-new-repo.git
+          # ls -ltra my-new-repo
 
 
           
