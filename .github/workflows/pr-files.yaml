@@ -1,0 +1,36 @@
+name: Get Changed Files in PR
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  get-changed-files:
+    runs-on: [self-hosted, linux, kubernetes]  # Use labels for your K8s runner
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install GitHub CLI
+        run: |
+          curl -fsSL https://cli.github.com/install.sh | bash
+
+      - name: Authenticate GitHub CLI
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Get list of changed files in PR
+        id: changed-files
+        run: |
+          echo "Fetching changed files for PR #${{ github.event.pull_request.number }}"
+          files=$(gh pr view ${{ github.event.pull_request.number }} --json files --jq '.files[].path')
+          echo "$files"
+          echo "CHANGED_FILES<<EOF" >> $GITHUB_ENV
+          echo "$files" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Print changed files
+        run: |
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
