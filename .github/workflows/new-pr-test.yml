@@ -1,4 +1,4 @@
-name: PR File Change Checker
+name: PR File Change Checker test
 
 on:
   pull_request:
