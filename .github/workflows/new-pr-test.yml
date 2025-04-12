@@ -3,6 +3,8 @@ name: PR File Change Checker test
 on:
   pull_request:
     types: [opened, synchronize]
+    branches:
+      - main
 
 jobs:
   detect-file-changes:
