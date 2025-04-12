@@ -14,11 +14,12 @@ jobs:
     steps:
       - name: Checkout PR code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # important!
 
-      - name: Get list of changed files
-        id: changed-files
+      - name: Fetch base branch and compare changes
         run: |
-          echo "Fetching changed files in PR #${{ github.event.pull_request.number }}"
+          echo "Base ref: ${{ github.event.pull_request.base.ref }}"
           git fetch origin ${{ github.event.pull_request.base.ref }}
           git diff --name-only origin/${{ github.event.pull_request.base.ref }}...HEAD > changed_files.txt
           echo "Changed files:"
