@@ -24,9 +24,16 @@ jobs:
           git diff --name-only origin/${{ github.event.pull_request.base.ref }}...HEAD > changed_files.txt
           echo "Changed files:"
           cat changed_files.txt
-
       - name: Upload changed files list as artifact
-        uses: actions/upload-artifact@v2
+        uses: ./.github/actions/upload-artifact
         with:
-          name: changed-files
-          path: changed_files.txt
+           name: changed-files
+           path: changed_files.txt
+
+
+      # - name: Upload changed files list as artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: changed-files
+      #     path: changed_files.txt
+      
