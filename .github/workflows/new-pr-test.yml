@@ -1,3 +1,35 @@
+# name: PR File Change Checker
+
+# on:
+#   pull_request:
+#     types: [opened, synchronize]
+#     branches:
+#       - main
+
+# jobs:
+#   detect-file-changes:
+#     name: Get Changed Files in PR
+#     runs-on: cluster2
+
+#     steps:
+#       - name: Checkout PR code
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0  # Required for diff
+
+#       - name: Show changed files
+#         run: |
+#           echo "Base ref: ${{ github.event.pull_request.base.ref }}"
+#           echo "Head ref: ${{ github.event.pull_request.head.ref }}"
+
+#           git fetch origin ${{ github.event.pull_request.base.ref }}
+#           git diff --name-only origin/${{ github.event.pull_request.base.ref }}...HEAD > changed_files.txt
+
+#           echo "Changed files:"
+#           cat changed_files.txt
+
+
+
 name: PR File Change Checker
 
 on:
@@ -7,23 +39,28 @@ on:
       - main
 
 jobs:
-  detect-file-changes:
-    name: Get Changed Files in PR
+  detect-changes:
+    name: Get Changed Files & Diff
     runs-on: cluster2
 
     steps:
-      - name: Checkout PR code
+      - name: Checkout code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Required for diff
+          fetch-depth: 0  # Needed for full git diff comparison
 
-      - name: Show changed files
+      - name: Fetch base branch
         run: |
-          echo "Base ref: ${{ github.event.pull_request.base.ref }}"
-          echo "Head ref: ${{ github.event.pull_request.head.ref }}"
-
+          echo "Base branch: ${{ github.event.pull_request.base.ref }}"
           git fetch origin ${{ github.event.pull_request.base.ref }}
-          git diff --name-only origin/${{ github.event.pull_request.base.ref }}...HEAD > changed_files.txt
 
-          echo "Changed files:"
-          cat changed_files.txt
+      - name: Show list of changed files
+        run: |
+          echo "📝 Changed files between base and head:"
+          git diff --name-only origin/${{ github.event.pull_request.base.ref }}...HEAD
+
+      - name: Show content differences
+        run: |
+          echo "🔍 Content changes (diff):"
+          git diff origin/${{ github.event.pull_request.base.ref }}...HEAD
+
