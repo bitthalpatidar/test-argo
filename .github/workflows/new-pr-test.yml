@@ -26,7 +26,7 @@ jobs:
           cat changed_files.txt
 
       - name: Upload changed files list as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: changed-files
           path: changed_files.txt
