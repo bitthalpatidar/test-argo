@@ -33,12 +33,12 @@ jobs:
 
       - name: Tag and Push Docker Image to ECR
         run: |
-          docker tag $IMAGE_NAME:${{ github.sha }} $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha::7 }}
+          docker tag $IMAGE_NAME:${{ github.sha }} $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha }}
           docker push $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha }}
 
       - name: Update Helm Values
         run: |
-          sed -i "s|tag:.*|tag: \"${{ github.sha::7 }}\"|g" helm/values.yaml
+          sed -i "s|tag:.*|tag: \"${{ github.sha }}\"|g" helm/values.yaml
 
       - name: Commit Changes to values.yaml
         run: |
