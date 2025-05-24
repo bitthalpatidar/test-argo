@@ -4,7 +4,7 @@ FROM python:3.9-slim as frist
 
 WORKDIR /app
 
-COPY app.py .
+#COPY app.py .
 # Expose port 80
 EXPOSE 80
 
@@ -12,4 +12,4 @@ FROM python:3.9-slim as second
 
 WORKDIR /app2
 COPY --from=frist /app  app2
-cmd ["python", "app.py"]
+cmd ["python", "print("hi team")"]
