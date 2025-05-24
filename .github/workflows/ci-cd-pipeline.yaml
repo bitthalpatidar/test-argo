@@ -38,7 +38,7 @@ jobs:
 
       - name: Update Helm Values
         run: |
-          sed -i "s|tag:.*|tag: \"${{ github.sha }}\"|g" helm/values.yaml
+          sed -i "s|tag:.*|tag: \"${{ github.sha }}\"|g" datas/helm/single-helm/values.yaml
 
       - name: Commit Changes to values.yaml
         run: |
