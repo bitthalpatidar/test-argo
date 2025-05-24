@@ -44,6 +44,7 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
+          git branch
           git config user.name "bitthalpatidar"
           git config user.email "bitthalpatidar@example.com"
           git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
