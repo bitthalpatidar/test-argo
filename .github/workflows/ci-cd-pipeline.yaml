@@ -10,7 +10,7 @@ jobs:
     runs-on: self-hosted
 
     env:
-      ECR_REGISTRY: 757984607025.dkr.ecr.ap-south-1.amazonaws.com
+      ECR_REGISTRY: 757984607025.dkr.ecr.ap-south-1.amazonaws.com/new-repo
       IMAGE_NAME: myapp
 
     steps:
