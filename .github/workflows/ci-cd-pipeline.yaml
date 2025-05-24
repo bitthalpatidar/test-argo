@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - test-pr-workflow
+
+jobs:
+  test-build-deploy:
+    runs-on: self-hosted
+
+    env:
+      ECR_REGISTRY: 757984607025.dkr.ecr.ap-south-1.amazonaws.com
+      IMAGE_NAME: myapp
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ap-south-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build Docker Image
+        run: |
+          docker build -t $IMAGE_NAME:${{ github.sha::7 }} .
+
+      - name: Tag and Push Docker Image to ECR
+        run: |
+          docker tag $IMAGE_NAME:${{ github.sha::7 }} $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha::7 }}
+          docker push $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha::7 }}
+
+      - name: Update Helm Values
+        run: |
+          sed -i "s|tag:.*|tag: \"${{ github.sha::7 }}\"|g" helm/values.yaml
+
+      - name: Commit Changes to values.yaml
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add helm/values.yaml
+          git commit -m "update image tag with new value ${{ github.sha::7 }}" || echo "No changes to commit"
+          git push
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install myapp ./helm \
+            --namespace default \
+            --set image.repository=$ECR_REGISTRY/$IMAGE_NAME \
+            --set image.tag=${{ github.sha::7 }}
