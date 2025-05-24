@@ -50,7 +50,7 @@ jobs:
           git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
           git add .
           git commit -m "update image tag with new value ${{ github.sha }}"
-          git push 
+          git push origin test-pr-workflow
 
       - name: Deploy with Helm
         run: |
