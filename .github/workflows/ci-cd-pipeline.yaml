@@ -1,0 +1,60 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - test-pr-workflow
+
+jobs:
+  test-build-deploy:
+    runs-on: self-hosted
+
+    env:
+      ECR_REGISTRY: 757984607025.dkr.ecr.ap-south-1.amazonaws.com/new-repo
+      IMAGE_NAME: myapp
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ap-south-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build Docker Image
+        run: |
+          docker build -t $IMAGE_NAME:${{ github.sha }} .
+
+      - name: Tag and Push Docker Image to ECR
+        run: |
+          docker tag $IMAGE_NAME:${{ github.sha }} $ECR_REGISTRY:${{ github.sha }}
+          docker push $ECR_REGISTRY:${{ github.sha }}
+
+      - name: Update Helm Values
+        run: |
+          sed -i "s|tag:.*|tag: \"${{ github.sha }}\"|g" datas/helm/single-helm/values.yaml
+
+      - name: Commit Changes to values.yaml
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git branch
+          git config user.name "bitthalpatidar"
+          git config user.email "bitthalpatidar1992@gmail.com"
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
+          git add .
+          git commit -m "update image tag with new value ${{ github.sha }}"
+          git push origin test-pr-workflow
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install myapp ./datas/helm/single-helm \
+            --namespace default \
+            --set image.repository=$ECR_REGISTRY/$IMAGE_NAME \
+            --set image.tag=${{ github.sha }}
